@@ -35,10 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Pull the Docker image
+    
+    - name: Pull the Container image
       run: docker pull $SRC_IMAGE
       
-    - name: Inject MicroEnforcer
+    - name: Inject MicroEnforcer with aquactl 
       run: |
         wget --user $AQUA_USER --password $AQUA_PASSWORD https://get.aquasec.com/aquactl/v3/aquactl 
         chmod +x aquactl
@@ -51,9 +52,9 @@ jobs:
         docker image ls 
         docker login registry.aquasec.com -u $AQUA_USER -p $AQUA_PASSWORD
         docker pull registry.aquasec.com/scanner:2022.4
-        docker run --rm -v $GITHUB_WORKSPACE:/tmp -v /var/run/docker.sock:/var/run/docker.sock -e BUILD_NUMBER=$BUILD_NUMBER -e BUILD_JOB_NAME=$BUILD_NAME registry.aquasec.com/scanner:2022.4 scan -w /tmp --host $AQUA_HOST --token $AQUA_TOKEN --show-negligible --local $IMAGE_NAME --htmlfile /tmp/out.html --jsonfile /tmp/out.json --register-compliant --registry "My_Registry" > /dev/null
+        docker run --rm -v $GITHUB_WORKSPACE:/tmp -v /var/run/docker.sock:/var/run/docker.sock -e BUILD_NUMBER=$BUILD_NUMBER -e BUILD_JOB_NAME=$BUILD_NAME registry.aquasec.com/scanner:2022.4 scan -w /tmp --host AQUA_SERVER_URL --user $AQUA_SCANNER_USER --password $AQUA_SCANNER_PASSWORD --show-negligible --local $DST_IMAGE --htmlfile /tmp/out.html --jsonfile /tmp/out.json --register-compliant --registry "My_Registry" > /dev/null
         
-    - name: Push Docker image to Docker Hub
+    - name: Push Container image to Local/Private Container Registry
       run: |
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker push $DST_IMAGE 
