@@ -19,15 +19,15 @@ env:
   AQUA_ME_EnforcerGroup_Token: ${{ secrets.AQUA_ME_EnforcerGroup_Token }} # Authenticates the MicroEnforcer with the Aqua Server
 
   # Authenticate with local/private registry. Can be ECR/ACR/GCR etc. 
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} # Docker Registry
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} # Docker Registry
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} # Docker Registry authentication
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} # Docker Registry authentication
 
   # Env Var for the generic purposes
   BUILD_NUMBER: ${{ github.run_id }}
   BUILD_NAME: ${{ github.repository }}
   GITHUB_WORKSPACE: ${{ github.workspace }}
-  SRC_IMAGE: stanhoe/spring4shell:latest
-  DST_IMAGE: stanhoe/spring4shell:${{ github.run_id }}
+  SRC_IMAGE: stanhoe/spring4shell:latest # Source image naming 
+  DST_IMAGE: stanhoe/spring4shell:${{ github.run_id }} # Output image naming (After ME injection)
   
 jobs:       
   build:
