@@ -36,7 +36,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Pull the Container image
+    - name: Pull the Container Image
       run: docker pull $SRC_IMAGE
       
     - name: Inject MicroEnforcer with aquactl 
@@ -47,7 +47,7 @@ jobs:
         chmod +x microenforcer 
         sudo ./aquactl inject --src-image $SRC_IMAGE --dst-image $DST_IMAGE --microenforcer-binary ./microenforcer --aqua-server $AQUA_GATEWAY --aqua-token $AQUA_ME_EnforcerGroup_Token
         
-    - name: Aqua Image Scanner - Scan Image and Register to Aqua Console # Note the --registry and --register-compliant command 
+    - name: Aqua Image Scanner - Scan Embedded Image and Register to Aqua Console # Note the --registry and --register-compliant command 
       run: |
         docker image ls 
         docker login registry.aquasec.com -u $AQUA_USER -p $AQUA_PASSWORD
