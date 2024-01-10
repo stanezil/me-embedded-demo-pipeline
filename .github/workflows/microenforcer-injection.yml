@@ -31,7 +31,7 @@ env:
   
 jobs:       
   build:
-    name: Build, Scan, and Push Docker image
+    name: Build Image, Inject MicroEnforcer, Scan Image, and Push Image
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
